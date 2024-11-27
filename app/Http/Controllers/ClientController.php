@@ -15,7 +15,7 @@ class ClientController extends Controller
     public function index()
     {
         $clients = Client::all();
-        return Inertia::render('Products/Admin/Client/Index',[
+        return Inertia::render('Admin/Client/Index',[
             'clients'=>$clients
         ]);
     }
@@ -25,7 +25,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Products/Admin/Client/Create');
+        return Inertia::render('Admin/Client/Create');
     }
 
     /**
@@ -34,7 +34,7 @@ class ClientController extends Controller
     public function store(StoreClientRequest $request)
     {
         Client::create($request->validated());
-        return redirect()->route('clients.index');
+        return redirect()->back()->with('success','Client Record Saved Successfully.');
     }
 
     /**
@@ -63,7 +63,7 @@ class ClientController extends Controller
     public function update(UpdateClientRequest $request, Client $client)
     {
         $client->update($request->validated());
-        return redirect()->route('clients.index');
+        return redirect()->back()->with('success','Client Record Saved Successfully.');
     }
 
     /**

@@ -4,6 +4,8 @@ import { ref } from "vue";
 
 import { Head } from '@inertiajs/vue3';
 import { router } from "@inertiajs/vue3";
+import Swal from "sweetalert2";
+
 
 
 defineProps(['clients'])
@@ -42,10 +44,28 @@ document.addEventListener("click", (event) => {
 
     if (event.target.matches(".delete-btn")) {
         const id = event.target.getAttribute("data-id");
-        console.log(`Delete item with ID: ${id}`);
-        router.delete(`/clients/${id}`);
+        // Show SweetAlert2 confirmation dialog
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This action cannot be undone!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result)=>{
+            if(result.isConfirmed){
+                router.delete(`/clients/${id}`,{
+                    onSuccess: () => {
+                        Swal.fire("Deleted!", "The client record has been deleted.", "success");
+                    },
+                    onError: () => {
+                        Swal.fire("Error!", "There was an error deleting the client record.", "error");
+                    },
+                })
+            }
+        })
 
-        // Handle the delete action, e.g., confirm and send a delete request
     }
 });
 

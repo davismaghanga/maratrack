@@ -8,17 +8,21 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 const showingNavigationDropdown = ref(false);
 
-const menuItems = [
-    { name: "Products", route: "products.index" },
-    { name: "Transactions", route: "transactions.store" },
-    // { name: "Reports", route: "reports.index" },
-];
+// State to manage sidebar visibility
+const isSidebarOpen = ref(false)
+
+// Function to toggle sidebar visibility
+const toggleSidebar = () => {
+    isSidebarOpen.value = !isSidebarOpen.value;
+};
+
 </script>
 
 <template>
     <div>
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
 
+            <!--Navbar -->
             <nav
                 class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800"
             >
@@ -26,6 +30,7 @@ const menuItems = [
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="flex h-16 justify-between">
                         <div class="flex">
+
                             <!-- Logo -->
                             <div class="flex shrink-0 items-center">
                                 <Link :href="route('dashboard')">
@@ -35,19 +40,14 @@ const menuItems = [
                                 </Link>
                             </div>
 
-                            <!-- Navigation Links -->
+                            <!-- Navigation Links (dashboard,new product,new client)-->
                             <div
                                 class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
                             >
-                                <NavLink
-                                    :href="route('dashboard')"
-                                    :active="route().current('dashboard')"
-                                >
-                                    Dashboard
-                                </NavLink>
 
                                 <NavLink
                                     :href="route('products.create')"
+                                    :active="route().current('products.create')"
                                 >
                                     New Product
                                 </NavLink>
@@ -56,6 +56,12 @@ const menuItems = [
                                     :href="route('clients.create')"
                                 >
                                     New Client
+                                </NavLink>
+
+                                <NavLink
+                                    :href="route('transactions.create')"
+                                >
+                                    Restock/Package
                                 </NavLink>
                             </div>
                         </div>
@@ -158,15 +164,16 @@ const menuItems = [
                     class="sm:hidden"
                 >
                     <div class="space-y-1 pb-3 pt-2">
-                        <ResponsiveNavLink
-                            :href="route('dashboard')"
-                            :active="route().current('dashboard')"
-                        >
-                            Dashboard
-                        </ResponsiveNavLink>
+<!--                        <ResponsiveNavLink-->
+<!--                            :href="route('dashboard')"-->
+<!--                            :active="route().current('dashboard')"-->
+<!--                        >-->
+<!--                            Dashboard-->
+<!--                        </ResponsiveNavLink>-->
 
                         <ResponsiveNavLink
                             :href="route('products.create')"
+                            :active="route().current('products.create')"
                         >
                             New Product
                         </ResponsiveNavLink>
@@ -209,12 +216,77 @@ const menuItems = [
                 </div>
             </nav>
 
+            <div class="flex h-screen overflow-hidden">
+                <!--Sidebar-->
+                <nav
+                    class="bg-gray-800 text-white w-64 space-y-6 py-7 px-2 md:relative absolute transform -translate-x-full md:translate-x-0 transition-transform duration-200 h-screen z-40"
+                    :class="{ '-translate-x-full': !isSidebarOpen, 'translate-x-0': isSidebarOpen  }"
+                >
+                    <div>
+                        <ul class="space-y-4">
+                            <li>
+                                <Link
+                                    :href="route('products.index')"
+                                    class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
+                                >
+                                    Products
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    :href="route('transactions.index')"
+                                    class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
+                                >
+                                    Stock History
+                                </Link>
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
+                                >Restock/Package</a>
+                            </li>
 
+                            <li>
+                                <Link
+                                    :href="route('clients.index')"
+                                    class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
+                                >Clients
+                                </Link>
+                            </li>
+                            <li>
 
-            <!-- Page Content -->
-            <main>
-                <slot />
-            </main>
+                                <Link
+                                    :href="route('logout')"
+                                    method="post"
+                                    as="button"
+                                    class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:bg-contain"
+                                >Logout
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <div class="flex-1 flex flex-col overflow-auto">
+                    <header class="bg-gray-100 px-6 py-4 flex justify-between items-center">
+                        <button
+                            class="md:hidden text-gray-700 focus:outline-none top-4 left-4 z-50"
+                            @click="toggleSidebar"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                            </svg>
+                        </button>
+                        <h1 class="text-lg font-semibold text-gray-800">Dashboard</h1>
+                    </header>
+
+                    <!-- Page Content -->
+                    <main class="p-6 flex-grow dark:text-white">
+                        <slot />
+                    </main>
+                </div>
+            </div>
         </div>
     </div>
 </template>

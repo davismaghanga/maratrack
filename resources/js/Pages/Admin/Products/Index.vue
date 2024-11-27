@@ -25,16 +25,16 @@ const columns = ref([
 document.addEventListener("click", (event) => {
     if (event.target.matches(".edit-btn")) {
         const id = event.target.getAttribute("data-id");
-        console.log(`Edit item with ID: ${id}`);
+        // Handle the edit action, e.g., navigate to an edit page or open a modal
         router.get(`/products/${id}/edit`);
 
 
-        // Handle the edit action, e.g., navigate to an edit page or open a modal
+
     }
 
     if (event.target.matches(".view-btn")) {
         const id = event.target.getAttribute("data-id");
-        console.log(`View item with ID: ${id}`);
+        //view product
         router.get(`/products/${id}`);
 
     }
@@ -68,8 +68,8 @@ document.addEventListener("click", (event) => {
         // Handle the delete action, e.g., confirm and send a delete request
     }
 });
-
 </script>
+
 <style scoped>
 .btn {
     margin-right: 5px;

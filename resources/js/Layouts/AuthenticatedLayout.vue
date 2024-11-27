@@ -51,6 +51,12 @@ const menuItems = [
                                 >
                                     New Product
                                 </NavLink>
+
+                                <NavLink
+                                    :href="route('clients.create')"
+                                >
+                                    New Client
+                                </NavLink>
                             </div>
                         </div>
 
@@ -163,6 +169,12 @@ const menuItems = [
                             :href="route('products.create')"
                         >
                             New Product
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink
+                            :href="route('clients.create')"
+                        >
+                            New Client
                         </ResponsiveNavLink>
                     </div>
 

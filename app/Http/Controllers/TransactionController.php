@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
+use App\Models\Product;
 use App\Models\Transaction;
 use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class TransactionController extends Controller
 {
@@ -13,7 +18,10 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $transactions =  Transaction::with(['product:id,name','user:id,name','client:id,name,country'])->get();
+        return Inertia::render('Admin/Transactions/Index',[
+            'transactions'=>$transactions
+        ]);
     }
 
     /**
@@ -21,7 +29,12 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        //
+        $products = Product::all();
+        $clients = Client::all();
+        return Inertia::render('Admin/Transactions/Create',[
+            'products'=>$products,
+            'clients'=>$clients
+        ]);
     }
 
     /**
@@ -29,7 +42,30 @@ class TransactionController extends Controller
      */
     public function store(StoreTransactionRequest $request)
     {
-        //
+        $transaction = new Transaction();
+        $transaction->product_id = $request['product_id'];
+        $transaction->type = $request['type'];
+        $transaction->quantity = $request['quantity'];
+        $transaction->user_id = $request->user()->id;
+        $transaction->client_id = $request->client_id;
+        $transaction->save();
+
+
+        $product = Product::find($request['product_id']);
+        if ($request['type'] == 'restock'){
+            $product->current_stock += $transaction->quantity;
+        }
+        else{
+            if ($product->current_stock < $transaction->quantity) {
+                return redirect()->back()->withErrors(['error' => 'Insufficient stock.']);
+            }
+            $product->current_stock -= $transaction->quantity;
+            $product->packaged_products += $request->packaged_products;
+        }
+        $product->save();
+
+        return redirect()->back()->with('success','Transaction Saved Successfully.');
+
     }
 
     /**
@@ -37,7 +73,11 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        //
+        return Inertia::render('Admin/Transactions/Show',[
+            'transaction'=>$transaction,
+            'product'=>Product::find($transaction->product_id),
+            'operator'=>User::find($transaction->user_id)
+        ]);
     }
 
     /**
@@ -45,7 +85,14 @@ class TransactionController extends Controller
      */
     public function edit(Transaction $transaction)
     {
-        //
+        return Inertia::render('Admin/Transactions/Edit',[
+            'product_id'=>$transaction->product_id,
+            'product'=>Product::find($transaction->product_id),
+            'products'=>Product::all(),
+            'clients'=>Client::all(),
+            'client_id'=>$transaction->client_id,
+            'transaction'=>$transaction
+        ]);
     }
 
     /**
@@ -53,7 +100,23 @@ class TransactionController extends Controller
      */
     public function update(UpdateTransactionRequest $request, Transaction $transaction)
     {
-        //
+        $transaction->update();
+        $product = Product::find($request['product_id']);
+        if ($request['type'] == 'restock'){
+            $product->current_stock += $transaction->quantity;
+        }
+        else{
+            if ($product->current_stock < $transaction->quantity) {
+                return redirect()->back()->withErrors(['error' => 'Insufficient stock.']);
+            }
+            $product->current_stock -= $transaction->quantity;
+            $product->packaged_products += $request->packaged_products;
+        }
+        $product->save();
+
+        return redirect()->back()->with('success','Transaction Saved Successfully.');
+
+
     }
 
     /**
@@ -61,6 +124,20 @@ class TransactionController extends Controller
      */
     public function destroy(Transaction $transaction)
     {
-        //
+        $transaction->delete();
+        return redirect()->route('transactions.index');
     }
+
+    public function restock()
+    {
+        $products = Product::all();
+        $clients = Client::all();
+        return Inertia::render('Operator/Restock-Package',[
+            'products'=>$products,
+            'clients'=>$clients
+        ]);
+
+    }
+
+
 }

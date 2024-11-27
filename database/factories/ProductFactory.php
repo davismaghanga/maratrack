@@ -18,9 +18,9 @@ class ProductFactory extends Factory
     {
         return [
             'name' => fake()->word, // Random product name
-            'opening_stock'=> fake()->numberBetween(10,100),
-            'current_stock'=> fake()->numberBetween(10,100),
-            'closing_stock'=> fake()->numberBetween(10,100),
+            'opening_stock'=> fake()->randomFloat(1,10,100),
+            'current_stock'=> fake()->randomFloat(1,10,100),
+            'closing_stock'=> fake()->randomFloat(1,10,100),
             'packaged_products'=> fake()->numberBetween(10,100),
         ];
     }

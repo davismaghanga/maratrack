@@ -19,6 +19,10 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
-        "@inertiajs/vue3": "^1.2.0"
+        "@inertiajs/vue3": "^1.2.0",
+        "datatables.net": "^2.1.8",
+        "datatables.net-dt": "^2.1.8",
+        "datatables.net-vue3": "^3.0.2",
+        "sweetalert2": "^11.14.5"
     }
 }

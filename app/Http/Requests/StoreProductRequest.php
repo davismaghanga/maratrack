@@ -24,9 +24,7 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => 'required|max:255',
             'opening_stock'=>'required|min:0',
-            'current_stock'=>'required|min:0',
-            'closing_stock'=>'required|min:0',
-            'packaged_products'=>'required|min:0',
+            'current_stock'=>'min:0'
         ];
     }
 }

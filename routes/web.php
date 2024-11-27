@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
@@ -28,9 +29,18 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('products', ProductController::class);
 
-    Route::post('transactions', [TransactionController::class, 'store'])->name('transactions.store');
+    //admin routes
+    Route::resource('products', ProductController::class);
+    Route::resource('clients', ClientController::class);
+    Route::resource('transactions', TransactionController::class);
+
+    //operator routes
+    Route::get('/restock',[TransactionController::class,'restock'])->name('transaction.restock');//package and restock
+    Route::get('/stockView', [ProductController::class, 'stockView'])->name('products.stockView');//close-stock-view
+    Route::post('/closeStock', [ProductController::class, 'closeStock'])->name('products.closeStock');
+
+
 });
 
 require __DIR__.'/auth.php';

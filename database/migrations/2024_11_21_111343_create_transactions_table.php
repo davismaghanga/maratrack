@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained()->onDelete('cascade'); //in case product deletes,delete transaction too
             $table->enum('type', ['restock', 'packaged']);
-            $table->integer('quantity');
+            $table->float('quantity');
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); //employee that transacted
-            $table->foreignId('client_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('client_id')->nullable();
             $table->timestamps();
         });
     }

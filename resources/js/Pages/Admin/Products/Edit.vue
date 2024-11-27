@@ -1,19 +1,37 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3'
-const form = useForm({
-    name:null,
-    opening_stock:0,
-    current_stock:0,
-    closing_stock:0,
-    packaged_products:0,
+import {Head, useForm} from '@inertiajs/vue3'
+const props = defineProps({
+    product:Object
 })
-function create(){
-    form.post(route('products.store'))
+const form = useForm({
+    name:props.product.name,
+    opening_stock:props.product.opening_stock,
+    current_stock:props.product.current_stock,
+    closing_stock:props.product.closing_stock,
+    packaged_products:props.product.packaged_products
+})
+function update(){
+    form.put(route('products.update',{product:props.product.id}))
 }
+
+
 </script>
 
+
 <template>
-    <form @submit.prevent="create">
+    <Head title="New Product" />
+    <div class="p-4">
+        <h1 class="text-2xl font-semibold mb-4">New Product</h1>
+
+        <div v-if="$page.props.flash.success" class="text-gray-600 bg-green-400 w-full border-gray-200 px-2">
+            {{$page.props.flash.success}}
+        </div>
+        <div class="text-red-500 mt-2 rounded-2xl w-full border-gray-200">
+            {{form.errors.error}}
+        </div>
+    </div>
+
+    <form @submit.prevent="update">
         <label for="name">Product Name:</label>
         <input id="name" v-model="form.name" />
         <div v-if="form.errors.name" class="text-red-500">
@@ -46,4 +64,5 @@ function create(){
 
         <button type="submit">Submit</button>
     </form>
+
 </template>

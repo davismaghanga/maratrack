@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('opening_stock')->default(0);
-            $table->integer('current_stock')->default(0);
-            $table->integer('closing_stock')->nullable();
+            $table->float('opening_stock')->default(0);
+            $table->float('current_stock')->default(0);
+            $table->float('closing_stock')->nullable();
             $table->integer('packaged_products')->default(0);
             $table->timestamps();
         });
+
     }
 
     /**

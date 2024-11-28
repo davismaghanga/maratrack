@@ -31,7 +31,7 @@ function create(){
                     {{form.errors.name}}
                 </div>
 
-                <label for="opening_stock" class="block font-medium">Opening Stock:</label>
+                <label for="opening_stock" class="block font-medium">Opening Stock (Kg/L):</label>
                 <input id="opening_stock" v-model="form.opening_stock" class="w-1/2 p-2 border rounded" />
                 <div v-if="form.errors.opening_stock" class="text-red-500">
                     {{form.errors.opening_stock}}

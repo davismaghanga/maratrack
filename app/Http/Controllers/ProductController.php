@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -50,8 +51,12 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        $transactions = Transaction::with(['product:id,name','user:id,name'])
+            ->where('product_id',$product->id)
+            ->latest()
+            ->get();
         return Inertia::render('Admin/Products/Show',[
-            'product'=>$product
+            'transactions'=>$transactions
         ]);
     }
 

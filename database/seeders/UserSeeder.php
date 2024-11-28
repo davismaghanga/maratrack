@@ -20,16 +20,5 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin123'),
         ]);
 
-        DB::table('users')->insert([
-            'name' => 'operator1',
-            'email' => 'operator1@mara.com',
-            'password' => Hash::make('password'),
-        ]);
-
-        DB::table('users')->insert([
-            'name' => 'operator2',
-            'email' => 'operator2@mara.com',
-            'password' => Hash::make('password'),
-        ]);
     }
 }

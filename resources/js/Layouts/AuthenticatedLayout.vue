@@ -34,9 +34,7 @@ const toggleSidebar = () => {
                             <!-- Logo -->
                             <div class="flex shrink-0 items-center">
                                 <Link :href="route('dashboard')">
-                                    <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200"
-                                    />
+                                    <ApplicationLogo/>
                                 </Link>
                             </div>
 
@@ -45,24 +43,15 @@ const toggleSidebar = () => {
                                 class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
                             >
 
-                                <NavLink
-                                    :href="route('products.create')"
-                                    :active="route().current('products.create')"
-                                >
-                                    New Product
-                                </NavLink>
+<!--                                <NavLink-->
+<!--                                    :href="route('products.create')"-->
+<!--                                    :active="route().current('products.create')"-->
+<!--                                >-->
+<!--                                    New Product-->
+<!--                                </NavLink>-->
 
-                                <NavLink
-                                    :href="route('clients.create')"
-                                >
-                                    New Client
-                                </NavLink>
 
-                                <NavLink
-                                    :href="route('transactions.create')"
-                                >
-                                    Restock/Package
-                                </NavLink>
+
                             </div>
                         </div>
 
@@ -229,39 +218,26 @@ const toggleSidebar = () => {
                                     :href="route('products.index')"
                                     class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
                                 >
-                                    Products
+                                    All Products
                                 </Link>
                             </li>
+
                             <li>
                                 <Link
-                                    :href="route('transactions.index')"
+                                    :href="route('products.create')"
                                     class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
                                 >
-                                    Stock History
+                                    New Product
                                 </Link>
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
-                                >Restock/Package</a>
                             </li>
 
-                            <li>
-                                <Link
-                                    :href="route('clients.index')"
-                                    class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
-                                >Clients
-                                </Link>
-                            </li>
+
                             <li>
 
                                 <Link
-                                    :href="route('logout')"
-                                    method="post"
-                                    as="button"
+                                    :href="route('transactions.create')"
                                     class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:bg-contain"
-                                >Logout
+                                >Restock/Package
                                 </Link>
                             </li>
                         </ul>

@@ -26,7 +26,8 @@ class UpdateProductRequest extends FormRequest
             'opening_stock'=>'required|min:0',
             'current_stock'=>'required|min:0',
             'closing_stock'=>'required|min:0',
-            'packaged_products'=>'required|min:0',
+            'packaged_qty'=>'required|min:0',
+            'restocked_qty'=>'required|min:0',
         ];
     }
 }

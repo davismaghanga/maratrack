@@ -53,7 +53,7 @@ body {
             <div class="container mx-auto px-4 py-6 md:flex justify-between items-center">
                 <div class="flex items-center ">
                     <ApplicationLogo/>
-                    <div class="text-xl font-bold text-white/50 px-2">Stock Keeping System</div>
+                    <div class="text-xl font-bold text-white/50 px-2">Bulk Stock Management</div>
                 </div>
 
                 <div>

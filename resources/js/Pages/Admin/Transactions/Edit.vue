@@ -2,7 +2,7 @@
 import {Head, useForm} from '@inertiajs/vue3'
 const props = defineProps(['product','product_id','products','clients','client_id','transaction'])
 const form = useForm(
-    { product_id: props.product_id, type: props.transaction.type, client_id:props.client_id, packaged_products:props.product.packaged_products, quantity:props.transaction.quantity}
+    { product_id: props.product_id, type: props.transaction.type, quantity:props.transaction.quantity}
 );
 import { computed } from "vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
@@ -47,25 +47,9 @@ function recordTransaction(){
                     </div>
                 </div>
 
-                <div v-if="isVisible">
-                    <label>Packaged Products</label>
-                    <input v-model="form.packaged_products" type="number" class="w-full p-2 border rounded" placeholder="No of Packaged Products" min="0" required/>
-                    <div v-if="form.errors.packaged_products" class="text-red-500">
-                        {{form.errors.packaged_products}}
-                    </div>
-                </div>
 
-                <div v-if="isVisible">
-                    <label>Client</label>
-                    <select v-model="form.client_id" class="w-full p-2 border rounded" required>
-                        <option v-for="client in clients" :key="client.id" :value="client.id">{{ client.name }}</option>
-                    </select>
-                    <div v-if="form.errors.client_id" class="text-red-500">
-                        {{form.errors.client_id}}
-                    </div>
-                </div>
                 <div>
-                    <label>Quantity</label>
+                    <label>Quantity Packaged/Restocked</label>
                     <input v-model="form.quantity" type="number" class="w-full p-2 border rounded" placeholder="Quantity" required />
                     <div v-if="form.errors.quantity" class="text-red-500">
                         {{form.errors.quantity}}

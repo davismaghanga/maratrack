@@ -18,7 +18,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions =  Transaction::with(['product:id,name','user:id,name','client:id,name,country'])->get();
+        $transactions =  Transaction::with(['product:id,name','user:id,name'])->get();
         return Inertia::render('Admin/Transactions/Index',[
             'transactions'=>$transactions
         ]);
@@ -32,8 +32,7 @@ class TransactionController extends Controller
         $products = Product::all();
         $clients = Client::all();
         return Inertia::render('Admin/Transactions/Create',[
-            'products'=>$products,
-            'clients'=>$clients
+            'products'=>$products
         ]);
     }
 
@@ -47,20 +46,20 @@ class TransactionController extends Controller
         $transaction->type = $request['type'];
         $transaction->quantity = $request['quantity'];
         $transaction->user_id = $request->user()->id;
-        $transaction->client_id = $request->client_id;
         $transaction->save();
 
 
         $product = Product::find($request['product_id']);
         if ($request['type'] == 'restock'){
             $product->current_stock += $transaction->quantity;
+            $product->restocked_qty = $product->restocked_qty + $transaction->quantity;
         }
         else{
             if ($product->current_stock < $transaction->quantity) {
                 return redirect()->back()->withErrors(['error' => 'Insufficient stock.']);
             }
             $product->current_stock -= $transaction->quantity;
-            $product->packaged_products += $request->packaged_products;
+            $product->packaged_qty = $product->packaged_qty + $transaction->quantity;
         }
         $product->save();
 
@@ -87,10 +86,7 @@ class TransactionController extends Controller
     {
         return Inertia::render('Admin/Transactions/Edit',[
             'product_id'=>$transaction->product_id,
-            'product'=>Product::find($transaction->product_id),
             'products'=>Product::all(),
-            'clients'=>Client::all(),
-            'client_id'=>$transaction->client_id,
             'transaction'=>$transaction
         ]);
     }
@@ -104,13 +100,14 @@ class TransactionController extends Controller
         $product = Product::find($request['product_id']);
         if ($request['type'] == 'restock'){
             $product->current_stock += $transaction->quantity;
+            $product->restocked_qty = $product->restocked_qty + $transaction->quantity;
         }
         else{
             if ($product->current_stock < $transaction->quantity) {
                 return redirect()->back()->withErrors(['error' => 'Insufficient stock.']);
             }
             $product->current_stock -= $transaction->quantity;
-            $product->packaged_products += $request->packaged_products;
+            $product->packaged_qty += $request->packaged_qty;
         }
         $product->save();
 

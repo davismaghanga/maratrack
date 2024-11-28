@@ -17,7 +17,8 @@ return new class extends Migration
             $table->float('opening_stock')->default(0);
             $table->float('current_stock')->default(0);
             $table->float('closing_stock')->nullable();
-            $table->integer('packaged_products')->default(0);
+            $table->float('packaged_qty')->default(0);
+            $table->float('restocked_qty')->default(0);
             $table->timestamps();
         });
 

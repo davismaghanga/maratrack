@@ -9,7 +9,9 @@ const form = useForm({
     opening_stock:props.product.opening_stock,
     current_stock:props.product.current_stock,
     closing_stock:props.product.closing_stock,
-    packaged_products:props.product.packaged_products
+    packaged_qty:props.product.packaged_qty,
+    restocked_qty:props.product.restocked_qty
+
 })
 function update(){
     form.put(route('products.update',{product:props.product.id}))
@@ -59,10 +61,16 @@ function update(){
                     {{form.errors.closing_stock}}
                 </div>
 
-                <label for="packaged_products">Packaged Products:</label>
-                <input id="packaged_products" v-model="form.packaged_products" />
-                <div v-if="form.errors.packaged_products" class="text-red-500">
-                    {{form.errors.packaged_products}}
+                <label for="packaged_products">Packaged Quantity (Kg/L):</label>
+                <input id="packaged_products" v-model="form.packaged_qty" />
+                <div v-if="form.errors.packaged_qty" class="text-red-500">
+                    {{form.errors.packaged_qty}}
+                </div>
+
+                <label for="restocked_qty">Restocked Quantity (Kg/L):</label>
+                <input id="restocked_qty" v-model="form.restocked_qty" />
+                <div v-if="form.errors.packaged_qty" class="text-red-500">
+                    {{form.errors.restocked_qty}}
                 </div>
 
                 <button type="submit" class="block px-4 py-2 bg-indigo-600 text-white rounded">Submit</button>

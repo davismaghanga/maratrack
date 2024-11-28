@@ -13,5 +13,8 @@
     .btn-main{
         @apply block px-4 py-2 bg-indigo-600 text-white rounded
     }
+    .btn{
+        @apply bg-blue-200 rounded px-0.5 m-0.5
+    }
 
 }

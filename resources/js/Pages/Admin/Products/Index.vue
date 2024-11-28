@@ -10,12 +10,16 @@ defineProps(['products'])
 const columns = ref([
     { title: "ID", data: "id" },
     { title: "Name", data: "name" },
+    { title: "Opening Stock", data: "opening_stock" },
+    { title: "Current Stock", data: "current_stock" },
+    { title: "Cumulative Packaged Qty", data: "packaged_qty" },
+    { title: "Cumulative Restocked Qty", data: "restocked_qty" },
     {
         title: "Actions",
         render: (data, type, row)=>{
             return `
             <button class="btn btn-sm btn-primary edit-btn" data-id="${row.id}">Edit</button>
-            <button class="btn btn-sm btn-primary view-btn" data-id="${row.id}">View</button>
+            <button class="btn btn-sm btn-primary view-btn" data-id="${row.id}">History</button>
             <button class="btn btn-sm btn-danger delete-btn" data-id="${row.id}">Delete</button>
             `;
         }
@@ -27,8 +31,6 @@ document.addEventListener("click", (event) => {
         const id = event.target.getAttribute("data-id");
         // Handle the edit action, e.g., navigate to an edit page or open a modal
         router.get(`/products/${id}/edit`);
-
-
 
     }
 
@@ -93,6 +95,10 @@ document.addEventListener("click", (event) => {
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Opening Stock</th>
+                                <th>Current Stock</th>
+                                <th>Packaged Qty</th>
+                                <th>Restocked Qty</th>
                                 <th>Actions</th>
 
                             </tr>

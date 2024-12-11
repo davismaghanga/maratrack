@@ -28,6 +28,7 @@ class UpdateProductRequest extends FormRequest
             'closing_stock'=>'required|min:0',
             'packaged_qty'=>'required|min:0',
             'restocked_qty'=>'required|min:0',
+            'tanzania_bulk'=>'required|min:0',
         ];
     }
 }

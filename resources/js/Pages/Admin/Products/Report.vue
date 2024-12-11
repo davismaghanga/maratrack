@@ -19,11 +19,10 @@ const columns = ref([
 
     }
 ]);
-
 </script>
 
 <template>
-    <Head title="Product Transaction History"/>
+    <Head title="Product Transaction Report"/>
     <AuthenticatedLayout>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -41,6 +40,7 @@ const columns = ref([
                                 <th>Transaction Type</th>
                                 <th>Quantity (kg/l)</th>
                                 <th>Operator</th>
+                                <th>Date</th>
                             </tr>
                             </thead>
                         </DataTable>

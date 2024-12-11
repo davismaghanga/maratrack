@@ -19,6 +19,7 @@ return new class extends Migration
             $table->float('closing_stock')->nullable();
             $table->float('packaged_qty')->default(0);
             $table->float('restocked_qty')->default(0);
+            $table->float('tanzania_bulk')->default(0);
             $table->timestamps();
         });
 

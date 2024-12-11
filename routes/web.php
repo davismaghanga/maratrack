@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('clients', ClientController::class);
     Route::resource('transactions', TransactionController::class);
+    Route::get('/report',[ProductController::class,'reportStock'])->name('product.reportStock');
 
     //operator routes
     Route::get('/restock',[TransactionController::class,'restock'])->name('transaction.restock');//package and restock

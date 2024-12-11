@@ -1,12 +1,19 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import ReportModal from "@/Components/ReportModal.vue";
 import { ref } from "vue";
 import { Head } from '@inertiajs/vue3';
 import { router } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
 
-
 defineProps(['products'])
+
+const showReportModal = ref(false);
+const selectedProductId = ref(null);
+const openReportModal = (productId) => {
+    selectedProductId.value = productId;
+    showReportModal.value = true;
+};
 const columns = ref([
     { title: "ID", data: "id" },
     { title: "Name", data: "name" },
@@ -14,13 +21,15 @@ const columns = ref([
     { title: "Current Stock", data: "current_stock" },
     { title: "Cumulative Packaged Qty", data: "packaged_qty" },
     { title: "Cumulative Restocked Qty", data: "restocked_qty" },
+    { title: "Cumulative Tanzania Bulk Qty", data: "tanzania_bulk" },
     {
         title: "Actions",
         render: (data, type, row)=>{
             return `
-            <button class="btn btn-sm btn-primary edit-btn" data-id="${row.id}">Edit</button>
-            <button class="btn btn-sm btn-primary view-btn" data-id="${row.id}">History</button>
-            <button class="btn btn-sm btn-danger delete-btn" data-id="${row.id}">Delete</button>
+             <i class="fa fa-edit edit-btn font-awesome" title="Edit" data-id="${row.id}"></i>
+             <i class="fa fa-eye view-btn font-awesome" title="History" data-id="${row.id}"></i>
+             <i class="fa fa-trash delete-btn font-awesome" title="Delete" data-id="${row.id}"></i>
+             <i class="fa fa-clipboard report-btn font-awesome" title="Report" data-id="${row.id}"></i>
             `;
         }
     }
@@ -39,6 +48,13 @@ document.addEventListener("click", (event) => {
         //view product
         router.get(`/products/${id}`);
 
+    }
+
+    if (event.target.matches(".report-btn")){
+        const id = event.target.getAttribute("data-id");
+        // Handle the edit action, e.g., navigate to an edit page or open a modal
+        //console.log(id)
+        openReportModal(id)
     }
 
     if (event.target.matches(".delete-btn")) {
@@ -70,6 +86,8 @@ document.addEventListener("click", (event) => {
         // Handle the delete action, e.g., confirm and send a delete request
     }
 });
+
+
 </script>
 
 <style scoped>
@@ -99,6 +117,7 @@ document.addEventListener("click", (event) => {
                                 <th>Current Stock</th>
                                 <th>Packaged Qty</th>
                                 <th>Restocked Qty</th>
+                                <th>Tanzania Bulk Qty</th>
                                 <th>Actions</th>
 
                             </tr>
@@ -106,7 +125,14 @@ document.addEventListener("click", (event) => {
                         </DataTable>
                     </div>
                 </div>
+
             </div>
+            <!-- Product Modal -->
+            <ReportModal
+                v-if="showReportModal"
+                :product-id="Number(selectedProductId)"
+                @close="showReportModal = false"
+            />
         </div>
     </AuthenticatedLayout>
 </template>

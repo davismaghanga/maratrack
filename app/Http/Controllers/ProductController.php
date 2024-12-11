@@ -51,7 +51,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $transactions = Transaction::with(['product:id,name','user:id,name'])
+        $transactions = Transaction::with(['product:id,name,current_stock','user:id,name'])
             ->where('product_id',$product->id)
             ->latest()
             ->get();
@@ -109,6 +109,21 @@ class ProductController extends Controller
         $product->closing_stock = $request->closing_stock;
         $product->save();
         return redirect()->route('products.index')->with('success','Stock saved successfully.');
+    }
+
+    public function reportStock(Request $request)
+    {
+
+        $transactions = Transaction::with(['product:id,name,current_stock','user:id,name'])
+            ->where('product_id',$request->productId)
+            ->whereBetween('created_at',[$request->startDate,$request->endDate])
+            ->where('type',$request->type)
+            ->latest()
+            ->get();
+        return Inertia::render('Admin/Products/Report',[
+            'transactions'=>$transactions
+        ]);
+
     }
 
 

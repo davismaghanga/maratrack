@@ -30,7 +30,6 @@ class TransactionController extends Controller
     public function create()
     {
         $products = Product::all();
-        $clients = Client::all();
         return Inertia::render('Admin/Transactions/Create',[
             'products'=>$products
         ]);
@@ -41,6 +40,7 @@ class TransactionController extends Controller
      */
     public function store(StoreTransactionRequest $request)
     {
+//        dd($request['type']);
         $transaction = new Transaction();
         $transaction->product_id = $request['product_id'];
         $transaction->type = $request['type'];
@@ -54,12 +54,20 @@ class TransactionController extends Controller
             $product->current_stock += $transaction->quantity;
             $product->restocked_qty = $product->restocked_qty + $transaction->quantity;
         }
-        else{
+        elseif($request['type'] == 'packaged'){
             if ($product->current_stock < $transaction->quantity) {
                 return redirect()->back()->withErrors(['error' => 'Insufficient stock.']);
             }
             $product->current_stock -= $transaction->quantity;
-            $product->packaged_qty = $product->packaged_qty + $transaction->quantity;
+            $product->packaged_qty +=  $transaction->quantity;
+        }
+        else{
+//            dd($request['type']);
+            if ($product->current_stock < $transaction->quantity) {
+                return redirect()->back()->withErrors(['error' => 'Insufficient stock.']);
+            }
+            $product->current_stock -= $transaction->quantity;
+            $product->tanzania_bulk += $transaction->quantity;
         }
         $product->save();
 

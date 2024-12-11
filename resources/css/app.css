@@ -5,7 +5,7 @@
 
 @layer components {
     label{
-        @apply block font-medium
+        @apply block font-medium text-black
     }
     input,select{
         @apply text-black w-1/2 p-2 border rounded
@@ -14,7 +14,10 @@
         @apply block px-4 py-2 bg-indigo-600 text-white rounded
     }
     .btn{
-        @apply bg-blue-200 rounded px-0.5 m-0.5
+        @apply bg-blue-500 rounded px-0.5 m-0.5
+    }
+    .font-awesome{
+        @apply cursor-pointer
     }
 
 }

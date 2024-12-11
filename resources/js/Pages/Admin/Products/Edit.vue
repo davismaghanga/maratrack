@@ -10,7 +10,8 @@ const form = useForm({
     current_stock:props.product.current_stock,
     closing_stock:props.product.closing_stock,
     packaged_qty:props.product.packaged_qty,
-    restocked_qty:props.product.restocked_qty
+    restocked_qty:props.product.restocked_qty,
+    tanzania_bulk:props.product.tanzania_bulk
 
 })
 function update(){
@@ -56,7 +57,7 @@ function update(){
                 </div>
 
                 <label for="closing_stock">Closing Stock:</label>
-                <input id="closing_stock" v-model="form.closing_stock" />
+                <input id="closing_stock" v-model="form.closing_stock" min="0" />
                 <div v-if="form.errors.closing_stock" class="text-red-500">
                     {{form.errors.closing_stock}}
                 </div>
@@ -69,8 +70,14 @@ function update(){
 
                 <label for="restocked_qty">Restocked Quantity (Kg/L):</label>
                 <input id="restocked_qty" v-model="form.restocked_qty" />
-                <div v-if="form.errors.packaged_qty" class="text-red-500">
+                <div v-if="form.errors.restocked_qty" class="text-red-500">
                     {{form.errors.restocked_qty}}
+                </div>
+
+                <label for="tanzania_bulk">Tanzania Bulk Quantity (Kg/L):</label>
+                <input id="restocked_qty" v-model="form.tanzania_bulk" />
+                <div v-if="form.errors.tanzania_bulk" class="text-red-500">
+                    {{form.errors.tanzania_bulk}}
                 </div>
 
                 <button type="submit" class="block px-4 py-2 bg-indigo-600 text-white rounded">Submit</button>

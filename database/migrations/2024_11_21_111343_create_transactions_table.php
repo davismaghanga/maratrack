@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained()->onDelete('cascade'); //in case product deletes,delete transaction too
-            $table->enum('type', ['restock', 'packaged']);
+            $table->enum('type', ['restock', 'packaged','tanzaniaBulk']);
             $table->float('quantity');
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); //employee that transacted
             $table->timestamps();

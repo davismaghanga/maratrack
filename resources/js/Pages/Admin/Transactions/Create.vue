@@ -2,7 +2,7 @@
 import {Head, useForm} from '@inertiajs/vue3'
 defineProps(['products'])
 const form = useForm(
-    { product_id: '', type: 'restock', client_id:null, packaged_products:0, quantity: '' }
+    { product_id: '', type: 'restock', client_id:null, quantity: '' }
 );
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
@@ -40,6 +40,7 @@ function recordTransaction(){
                         <option value="">Select an option</option>
                         <option value="restock">Restock</option>
                         <option value="packaged">Packaged</option>
+                        <option value="tanzaniaBulk">Bulk Tanzania</option>
                     </select>
                     <div v-if="form.errors.type" class="text-red-500">
                         {{form.errors.type}}
@@ -47,12 +48,13 @@ function recordTransaction(){
                 </div>
 
                 <div>
-                    <label>Quantity Packaged/Restocked (kgs):</label>
+                    <label>Quantity Packaged/Restocked (kgs/litres):</label>
                     <input v-model="form.quantity" type="number" class="w-full p-2 border rounded" placeholder="Quantity" required min="0" step="0.01"/>
                     <div v-if="form.errors.quantity" class="text-red-500">
                         {{form.errors.quantity}}
                     </div>
                 </div>
+
                 <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded">Submit</button>
             </form>
         </div>

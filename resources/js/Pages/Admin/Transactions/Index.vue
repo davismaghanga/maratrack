@@ -34,11 +34,7 @@ const columns = ref([
 
     },
 
-    { title: "Client",
-        data: "client.name",
-        defaultContent: "N/A", // Show "N/A" if the user is null
 
-    },
     {
         title: "Actions",
         render: (data, type, row)=>{
@@ -125,7 +121,6 @@ document.addEventListener("click", (event) => {
                                 <th>Transaction Type</th>
                                 <th>Qty (kg/l)</th>
                                 <th>Operator</th>
-                                <th>Client</th>
                                 <th>Actions</th>
 
                             </tr>

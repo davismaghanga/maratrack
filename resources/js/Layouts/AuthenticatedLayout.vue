@@ -39,18 +39,7 @@ const toggleSidebar = () => {
                             </div>
 
                             <!-- Navigation Links (dashboard,new product,new client)-->
-                            <div
-                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
-                            >
-
-<!--                                <NavLink-->
-<!--                                    :href="route('products.create')"-->
-<!--                                    :active="route().current('products.create')"-->
-<!--                                >-->
-<!--                                    New Product-->
-<!--                                </NavLink>-->
-
-
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
 
                             </div>
                         </div>
@@ -153,12 +142,7 @@ const toggleSidebar = () => {
                     class="sm:hidden"
                 >
                     <div class="space-y-1 pb-3 pt-2">
-<!--                        <ResponsiveNavLink-->
-<!--                            :href="route('dashboard')"-->
-<!--                            :active="route().current('dashboard')"-->
-<!--                        >-->
-<!--                            Dashboard-->
-<!--                        </ResponsiveNavLink>-->
+
 
                         <ResponsiveNavLink
                             :href="route('products.create')"
@@ -167,11 +151,6 @@ const toggleSidebar = () => {
                             New Product
                         </ResponsiveNavLink>
 
-                        <ResponsiveNavLink
-                            :href="route('clients.create')"
-                        >
-                            New Client
-                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -240,6 +219,16 @@ const toggleSidebar = () => {
                                 >Restock/Package
                                 </Link>
                             </li>
+
+                            <li>
+
+                                <Link
+                                    :href="route('transactions.index')"
+                                    class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:bg-contain"
+                                >Product History
+                                </Link>
+                            </li>
+
                         </ul>
                     </div>
                 </nav>
@@ -255,6 +244,7 @@ const toggleSidebar = () => {
                             </svg>
                         </button>
                         <h1 class="text-lg font-semibold text-gray-800">Dashboard</h1>
+
                     </header>
 
                     <!-- Page Content -->

@@ -80,10 +80,31 @@ document.addEventListener("click", (event) => {
                 })
             }
         })
-        // console.log(`Delete item with ID: ${id}`);
-        // router.delete(`/products/${id}`);
+    }
 
-        // Handle the delete action, e.g., confirm and send a delete request
+    if(event.target.matches(".close-period-btn")){
+        // Show SweetAlert2 confirmation dialog
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This action will reset the opening stock of each product to be that of closing stock!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, close stock!",
+        }).then((result)=>{
+            if(result.isConfirmed){
+                router.get(`closeStock`,{
+                    onSuccess: () => {
+                        Swal.fire("Success!", "New Stock Period initialized!.", "success");
+                    },
+                    onError: () => {
+                        Swal.fire("Error!", "There was an error initializing stock.", "error");
+                    },
+                })
+            }
+        })
+
     }
 });
 
@@ -100,6 +121,7 @@ document.addEventListener("click", (event) => {
     <Head title="Products" />
 
     <AuthenticatedLayout>
+        <button class="btn btn-main px-2 close-period-btn">Close Stock Period</button>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">

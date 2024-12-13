@@ -62,7 +62,6 @@ class TransactionController extends Controller
             $product->packaged_qty +=  $transaction->quantity;
         }
         else{
-//            dd($request['type']);
             if ($product->current_stock < $transaction->quantity) {
                 return redirect()->back()->withErrors(['error' => 'Insufficient stock.']);
             }
@@ -71,7 +70,7 @@ class TransactionController extends Controller
         }
         $product->save();
 
-        return redirect()->back()->with('success','Transaction Saved Successfully.');
+        return redirect()->route('transactions.index')->with('success','Transaction Saved Successfully.');
 
     }
 
@@ -110,16 +109,23 @@ class TransactionController extends Controller
             $product->current_stock += $transaction->quantity;
             $product->restocked_qty = $product->restocked_qty + $transaction->quantity;
         }
+        elseif($request['type']=='packaged'){
+            if ($product->current_stock < $transaction->quantity) {
+                return redirect()->back()->withErrors(['error' => 'Insufficient stock.']);
+            }
+            $product->current_stock -= $transaction->quantity;
+            $product->packaged_qty += $request->quantity;
+        }
         else{
             if ($product->current_stock < $transaction->quantity) {
                 return redirect()->back()->withErrors(['error' => 'Insufficient stock.']);
             }
             $product->current_stock -= $transaction->quantity;
-            $product->packaged_qty += $request->packaged_qty;
+            $product->tanzania_bulk += $request->quantity;
         }
         $product->save();
 
-        return redirect()->back()->with('success','Transaction Saved Successfully.');
+        return redirect()->route('transactions.index')->with('success','Transaction Saved Successfully.');
 
 
     }

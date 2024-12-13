@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
     //operator routes
     Route::get('/restock',[TransactionController::class,'restock'])->name('transaction.restock');//package and restock
     Route::get('/stockView', [ProductController::class, 'stockView'])->name('products.stockView');//close-stock-view
-    Route::post('/closeStock', [ProductController::class, 'closeStock'])->name('products.closeStock');
+    Route::get('/closeStock', [ProductController::class, 'closeStock'])->name('closeStock');
 
 
 });

@@ -42,7 +42,7 @@ class ProductController extends Controller
             'opening_stock'=> $validated['opening_stock'],
             'current_stock' => $validated['opening_stock']
         ]);
-        return redirect()->back()->with('success','Product Saved Successfully.');
+        return redirect()->route('products.index')->with('success','Product Saved Successfully.');
 
     }
 
@@ -103,12 +103,17 @@ class ProductController extends Controller
 
     }
 
-    public function closeStock(Request $request)
+    public function closeStock()
     {
-        $product = Product::find($request->product_id);
-        $product->closing_stock = $request->closing_stock;
-        $product->save();
-        return redirect()->route('products.index')->with('success','Stock saved successfully.');
+        $products = Product::all();
+        foreach ($products as $product){
+            //assign opening stock to be closing stock
+            $product->closing_stock = $product->current_stock;
+            $product->opening_stock = $product->closing_stock;
+            $product->save();
+        }
+
+        return redirect()->back()->with('success','Stock closed successfully.');
     }
 
     public function reportStock(Request $request)

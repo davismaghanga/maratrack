@@ -41,6 +41,7 @@ function recordTransaction(){
                         <option value="">Select an option</option>
                         <option value="restock">Restock</option>
                         <option value="packaged">Packaged</option>
+                        <option value="tanzaniaBulk">Packaged</option>
                     </select>
                     <div v-if="form.errors.type" class="text-red-500">
                         {{form.errors.type}}
